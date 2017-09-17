@@ -1,0 +1,11 @@
+com\pfernand\datastore\writer\Writer.class
+com\pfernand\datastore\identifier\Identifier.class
+com\pfernand\datastore\identifier\IdentifierDAO.class
+com\pfernand\datastore\app\DataStoreManagerMap.class
+com\pfernand\datastore\reader\Reader.class
+com\pfernand\datastore\identifier\Observation.class
+com\pfernand\datastore\identifier\IdentifierHashmapImpl.class
+com\pfernand\datastore\writer\StdOutputWriter.class
+com\pfernand\datastore\app\DataStore.class
+com\pfernand\datastore\app\DataStoreManager.class
+com\pfernand\datastore\reader\StdInputReader.class
