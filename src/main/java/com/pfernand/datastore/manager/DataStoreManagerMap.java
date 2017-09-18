@@ -65,5 +65,12 @@ public class DataStoreManagerMap implements DataStoreManager {
 		
 		return result;
 	}
+	
+	/*
+	 * Get the identifier (testing purpose)
+	 */
+	public IdentifierDAO getIdentifier() {
+		return m_Identifier;
+	}
 
 }

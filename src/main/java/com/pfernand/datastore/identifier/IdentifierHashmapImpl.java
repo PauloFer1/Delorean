@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class IdentifierHashmapImpl implements IdentifierDAO {
 
-	private HashMap<Integer, Identifier> m_Storer = new HashMap<Integer, Identifier>();
+	private HashMap<Integer, IdentifierTreeSet> m_Storer = new HashMap<Integer, IdentifierTreeSet>();
 	
 	@Override
 	public String create(int id, int timestamp, String data) throws IllegalArgumentException {
@@ -15,7 +15,7 @@ public class IdentifierHashmapImpl implements IdentifierDAO {
 		}
 		
 		// create new identifier
-		Identifier identifier = new Identifier(id);
+		IdentifierTreeSet identifier = new IdentifierTreeSet(id);
 		identifier.insertObservation(timestamp, data);
 		
 		// Store it into the hashmap
@@ -34,7 +34,7 @@ public class IdentifierHashmapImpl implements IdentifierDAO {
 		} 
 		
 		// Get identifier
-		Identifier identifier = m_Storer.get(id);
+		IdentifierTreeSet identifier = m_Storer.get(id);
 		
 		/* Get the data from the prior observation as-of that timestamp.
 		 * Assuming that we can insert an older timestamp, we need to search
@@ -60,7 +60,7 @@ public class IdentifierHashmapImpl implements IdentifierDAO {
 		String dataWithGreatestTimestamp = latest(id).getData();
 		
 		// Get identifier
-		Identifier identifier = m_Storer.get(id);
+		IdentifierTreeSet identifier = m_Storer.get(id);
 		identifier.deleteAllHistory();
 		
 		return dataWithGreatestTimestamp;
@@ -75,7 +75,7 @@ public class IdentifierHashmapImpl implements IdentifierDAO {
 		} 
 		
 		// Get identifier
-		Identifier identifier = m_Storer.get(id);
+		IdentifierTreeSet identifier = m_Storer.get(id);
 		identifier.deleteObservationsFromTimestampForward(timestamp);
 				
 		// Return the latest data after delete 
@@ -91,7 +91,7 @@ public class IdentifierHashmapImpl implements IdentifierDAO {
 		} 
 						
 		// Get identifier
-		Identifier identifier = m_Storer.get(id);
+		IdentifierTreeSet identifier = m_Storer.get(id);
 		
 		// Get data from the observation with the same or closest lower timestamp
 		String closestLowerEqualData = identifier.getClosestObservationWithLowerEqualTimestamp(timestamp).getData();
@@ -108,8 +108,25 @@ public class IdentifierHashmapImpl implements IdentifierDAO {
 		}
 		
 		// Get Identifier
-		Identifier identifier = m_Storer.get(id);
+		IdentifierTreeSet identifier = m_Storer.get(id);
 		
 		return identifier.getLatest();
+	}
+	
+	/*
+	 * Get the size of the observation history by given id (testing purposes)
+	 * 
+	 * @param int id - id of the identifier
+	 */
+	public int getHistorySizeById(int id) throws IllegalArgumentException {
+		// verify if id exists
+		if(!m_Storer.containsKey(id)) {
+			throw new IllegalArgumentException("Identifier with id: " + id + " do not exist.");
+		}
+		
+		// Get Identifier
+		IdentifierTreeSet identifier = m_Storer.get(id);
+		
+		return identifier.getObservations().size();
 	}
 }
