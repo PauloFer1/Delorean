@@ -17,34 +17,30 @@ public class DataStore {
 	
 	public static void main( String[] args )
 	{	 
-		 String inputCommand = "";
-		 
-		try {
-			
-			// Infinite cycle to read input
-			while(true) {
+		// Infinite cycle to read input
+		while(true) {
+			String inputCommand = "";
+			try {
 				inputCommand = m_Reader.getCommand();
+			} catch (IOException e) {
+				m_Writer.writeResponse( "ERR " + e.getMessage() );
+			}	
 				
-				// QUIT if command found
-				if(inputCommand.equals("QUIT")) {
-					return;
-				}
-				
-				String result = "";
-				try {
-					// Process input request
-					result = m_DataStoreManager.processLine(inputCommand);
-					
-					// Write response
-					m_Writer.writeResponse("OK " + result);
-				} catch (Exception e) {
-					m_Writer.writeResponse( "ERR " + e.getMessage() );
-				}
+			// Return if QUIT command found
+			if(inputCommand.equals("QUIT")) {
+				return;
 			}
-		} catch (IOException e) {
-			m_Writer.writeResponse( "ERR " + e.getMessage() );
-		} catch (Exception e) {
-			m_Writer.writeResponse( "ERR Unespected error: " + e.getMessage() );
+				
+			String result = "";
+			try {
+				// Process input request
+				result = m_DataStoreManager.processLine(inputCommand);
+					
+				// Write response
+				m_Writer.writeResponse("OK " + result);
+			} catch (Exception e) {
+				m_Writer.writeResponse( "ERR " + e.getMessage() );
+			}
 		}
 	}
 }

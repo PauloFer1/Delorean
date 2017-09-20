@@ -5,6 +5,10 @@ import com.pfernand.datastore.identifier.IdentifierDAO;
 import com.pfernand.datastore.identifier.IdentifierHashmapImpl;
 import com.pfernand.datastore.util.ParserUtil;
 
+/*
+ * Implementation of DataManager which uses IdentifierHashmapImpl
+ */
+
 public class DataStoreManagerMap implements DataStoreManager {
 	
 	private IdentifierDAO m_Identifier = new IdentifierHashmapImpl();
@@ -31,7 +35,7 @@ public class DataStoreManagerMap implements DataStoreManager {
 		if(args.length > 4) {
 			throw new IllegalArgumentException("Number of arguments are higher than expected.");
 		}
-		// Arguments shouldn't be lower than 4, except for DELETE and GET AND LATEST (2, 3 and 2)
+		// Arguments shouldn't be lower than 4, except for DELETE, GET AND LATEST (2, 3 and 2)
 		if( (action != Actions.DELETE && action != Actions.GET && action != Actions.LATEST && args.length < 4) || 
 				((action == Actions.DELETE || action == Actions.LATEST ) && args.length < 2) ||
 				(action == Actions.GET && args.length < 3) ) {

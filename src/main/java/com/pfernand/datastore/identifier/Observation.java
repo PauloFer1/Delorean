@@ -37,6 +37,9 @@ public class Observation implements Comparable<Observation> {
 	 * Methods
 	 */
 	
+	/*
+	 * Compare timestamp in order to insert into a DESC order
+	 */
 	@Override
 	public int compareTo(Observation o) {
 		

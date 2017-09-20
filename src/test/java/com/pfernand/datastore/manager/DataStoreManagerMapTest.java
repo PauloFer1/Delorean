@@ -1,5 +1,7 @@
 package com.pfernand.datastore.manager;
 
+import org.junit.Before;
+
 import com.pfernand.datastore.identifier.IdentifierDAO;
 import com.pfernand.datastore.identifier.IdentifierHashmapImpl;
 import com.pfernand.datastore.identifier.Observation;
@@ -13,6 +15,9 @@ import junit.framework.TestSuite;
  */
 public class DataStoreManagerMapTest extends TestCase {
 	
+	private DataStoreManagerMap dataStoreMan;
+	private IdentifierDAO identifier;
+	
 	public DataStoreManagerMapTest(String testName) {
 		super(testName);
 	}
@@ -23,15 +28,18 @@ public class DataStoreManagerMapTest extends TestCase {
 		return new TestSuite(DataStoreManagerMapTest.class);
 	}
 	
+	@Before
+	public void setUp() throws Exception {
+		dataStoreMan = new DataStoreManagerMap();
+		identifier = dataStoreMan.getIdentifier();
+	}
+	
 	/*
 	 * Test processing a valid create command 
 	 */
 	@org.junit.Test
 	public void testProcessLineValidCreateCommand(){
 		System.out.println("::Running testProcessLineValidCreateCommand");
-		
-		DataStoreManagerMap dataStoreMan = new DataStoreManagerMap();
-		IdentifierDAO identifier = dataStoreMan.getIdentifier();
 		
 		String result = dataStoreMan.processLine("CREATE 1 120 1.5");
 		String idData = identifier.get(1, 120);
@@ -48,9 +56,6 @@ public class DataStoreManagerMapTest extends TestCase {
 	@org.junit.Test
 	public void testProcessLineValidUpdateCommand() {
 		System.out.println("::Running testProcessLineValidUpdateCommand");
-		
-		DataStoreManagerMap dataStoreMan = new DataStoreManagerMap();
-		IdentifierDAO identifier = dataStoreMan.getIdentifier();
 		
 		dataStoreMan.processLine("CREATE 1 120 1.5");
 		String result = dataStoreMan.processLine("UPDATE 1 125 2.5");
@@ -69,9 +74,6 @@ public class DataStoreManagerMapTest extends TestCase {
 	public void testProcessLineValidUpdateOverridingObservationCommand() {
 		System.out.println("::Running testProcessLineValidUpdateOverridingObservationCommand");
 		
-		DataStoreManagerMap dataStoreMan = new DataStoreManagerMap();
-		IdentifierDAO identifier = dataStoreMan.getIdentifier();
-		
 		dataStoreMan.processLine("CREATE 1 120 1.5");
 		String result = dataStoreMan.processLine("UPDATE 1 120 2.5");
 		String idData = identifier.get(1, 120);
@@ -89,9 +91,6 @@ public class DataStoreManagerMapTest extends TestCase {
 	public void testProcessLineValidGetCommand() {
 		System.out.println("::Running testProcessLineValidGetCommand");
 		
-		DataStoreManagerMap dataStoreMan = new DataStoreManagerMap();
-		IdentifierDAO identifier = dataStoreMan.getIdentifier();
-		
 		dataStoreMan.processLine("CREATE 1 120 1.5");
 		dataStoreMan.processLine("UPDATE 1 125 2.5");
 		String idData = identifier.get(1, 122);
@@ -106,9 +105,6 @@ public class DataStoreManagerMapTest extends TestCase {
 	@org.junit.Test
 	public void testProcessLineValidLatestCommand() {
 		System.out.println("::Running testProcessLineValidLatestCommand");
-		
-		DataStoreManagerMap dataStoreMan = new DataStoreManagerMap();
-		IdentifierDAO identifier = dataStoreMan.getIdentifier();
 		
 		dataStoreMan.processLine("CREATE 1 120 1.5");
 		dataStoreMan.processLine("UPDATE 1 125 2.5");
@@ -127,9 +123,6 @@ public class DataStoreManagerMapTest extends TestCase {
 	public void testProcessLineValidDeleteCommandNoTimestamp() {
 		System.out.println("::Running testProcessLineValidDeleteCommandNoTimestamp");
 		
-		DataStoreManagerMap dataStoreMan = new DataStoreManagerMap();
-		IdentifierDAO identifier = dataStoreMan.getIdentifier();
-		
 		dataStoreMan.processLine("CREATE 1 120 1.5");
 		dataStoreMan.processLine("UPDATE 1 125 2.5");
 		String result = dataStoreMan.processLine("DELETE 1");
@@ -147,9 +140,6 @@ public class DataStoreManagerMapTest extends TestCase {
 	@org.junit.Test
 	public void testProcessLineValidDeleteCommand() {
 		System.out.println("::Running testProcessLineValidDeleteCommand");
-		
-		DataStoreManagerMap dataStoreMan = new DataStoreManagerMap();
-		IdentifierDAO identifier = dataStoreMan.getIdentifier();
 		
 		dataStoreMan.processLine("CREATE 1 120 1.5");
 		dataStoreMan.processLine("UPDATE 1 125 2.5");

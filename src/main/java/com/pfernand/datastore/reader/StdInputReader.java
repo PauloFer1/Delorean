@@ -1,12 +1,13 @@
 package com.pfernand.datastore.reader;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class StdInputReader implements Reader {
+/*
+ * Implementation of Reader using System.in
+ */
 
-	Console m_Console = System.console();
+public class StdInputReader implements Reader {
 	
 	Scanner m_Scanner = new Scanner(System.in);
 	

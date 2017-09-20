@@ -3,6 +3,12 @@ package com.pfernand.datastore.identifier;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+/*
+ * Identifier Class with a TreeSet to store Observations
+ * in memory when no persistence layer is used.
+ * This class is a sub-class of Identifier
+ */
+
 public class IdentifierTreeSet extends Identifier {
 
 	// Treeset to store Observation order by latest timestamp

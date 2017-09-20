@@ -2,6 +2,10 @@ package com.pfernand.datastore.identifier;
 
 import java.util.HashMap;
 
+/*
+ * Implementation of IdentifierDAO using an HashMap to store
+ * the data into memory. 
+ */
 public class IdentifierHashmapImpl implements IdentifierDAO {
 
 	private HashMap<Integer, IdentifierTreeSet> m_Storer = new HashMap<Integer, IdentifierTreeSet>();
